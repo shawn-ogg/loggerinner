@@ -22,10 +22,11 @@ defmodule Loggerinner.CLI do
 
   def log_in(username, password, passcode) do
     initial_ica = latest_ica()
+    ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"
 
-    Hound.start_session(browser: :chrome, user_agent: :chrome_desktop)
+    Hound.start_session(browser: :chrome, user_agent: ua)
 
-    navigate_to("https://wgdc.exconnect.hsbc.co.uk/logon/LogonPoint/tmindex.html")
+    navigate_to("https://exconnect.hsbc.co.uk/logon/LogonPoint/tmindex.html")
 
     login_field = find_element(:name, "login")
     password_field = find_element(:name, "passwd1")
@@ -35,8 +36,10 @@ defmodule Loggerinner.CLI do
     fill_field(password_field, password)
     fill_field(passcode_field, passcode)
 
-    download_link = find_element(:class, "storeapp-details-link")
+    login_link = find_element(:class, "forms-authentication-button")
+    click(login_link)
 
+    download_link = find_element(:class, "storeapp-details-link")
     click(download_link)
 
     latest_file =
