@@ -59,6 +59,7 @@ defmodule Loggerinner.CLI do
     Hound.end_session()
 
     IO.puts("opening #{latest_file}")
-    System.cmd("gio", ["open", latest_file])
+    _ = spawn(System, :cmd, ["gio", ["open", latest_file]])
+    :timer.sleep(100)  # leave enough time to spawn process
   end
 end
