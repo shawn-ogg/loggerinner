@@ -5,7 +5,7 @@ defmodule Loggerinner.CLI do
     log_in(
       System.get_env("STAFF_ID"),
       System.get_env("PASSWORD"),
-      IO.gets("Passcode: ")
+      System.get_env("PASSCODE")
     )
   end
 
